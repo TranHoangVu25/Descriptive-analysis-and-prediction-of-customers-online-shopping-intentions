@@ -14,7 +14,11 @@ st.set_page_config(
 st.title("🛒 Customer Purchase Prediction")
 st.markdown("---")
 
-file_path = 'D:\Tran Hoang Vu\Semester 6\Big Data Analytics\\assigment\model\model.pkl'
+# file_path = 'D:\Tran Hoang Vu\Semester 6\Big Data Analytics\\assigment\model\model.pkl'
+
+# import os
+# file_path = os.path.join('.', 'model', 'model.pkl')
+file_path = '.\\model\\model.pkl'
 # Load model from sidebar
 # st.sidebar.header("Configuration")
 # model_path = st.sidebar.text_input("Model file path", file_path)
@@ -29,7 +33,7 @@ def load_model(path):
 
 model = load_model(model_path)
 if not model:
-    st.error("❌ Không tải được model. Vui lòng kiểm tra đường dẫn ở sidebar.")
+    st.error("❌ Không tải được model.")
 
 # File uploader for prediction data
 uploaded_file = st.file_uploader("📂 Upload CSV for Prediction", type="csv")

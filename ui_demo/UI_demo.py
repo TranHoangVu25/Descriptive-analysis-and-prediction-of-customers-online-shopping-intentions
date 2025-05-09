@@ -1,40 +1,3 @@
-# import streamlit as st
-# import pandas as pd
-# import numpy as np
-# import joblib  # Dùng để load model đã train
-# # from sklearn.linear_model import LogisticRegression (nếu cần tạo model giả lập)
-
-# st.set_page_config(page_title="ML Prediction App", layout="centered")
-
-# st.title("🧠 Machine Learning Prediction App")
-
-# # 1. Chọn hoặc kéo thả file
-# uploaded_file = st.file_uploader("📁 Tải lên file CSV để dự đoán", type=["csv"])
-
-# if uploaded_file:
-#     # 2. Đọc dữ liệu
-#     data = pd.read_csv(uploaded_file)
-#     st.write("✅ Dữ liệu đầu vào:")
-#     st.dataframe(data)
-
-#     # 3. Load model đã huấn luyện sẵn (ví dụ: model.pkl)
-#     model = joblib.load(r"D:\Tran Hoang Vu\Semester 6\Big Data Analytics\assigment\model\model.pkl")
-
-#     # 4. Dự đoán
-#     if st.button("🔍 Dự đoán"):
-#         predictions = model.predict(data)
-
-#         # 5. Chuyển thành Yes/No
-#         result_df = data.copy()
-#         result_df["Prediction"] = ["Yes" if pred == 1 else "No" for pred in predictions]
-
-#         st.success("🎉 Dự đoán hoàn tất!")
-#         st.write("📊 Kết quả:")
-#         st.dataframe(result_df)
-
-#         # (Tuỳ chọn) Cho phép tải về
-#         csv = result_df.to_csv(index=False).encode('utf-8')
-#         st.download_button("📥 Tải kết quả CSV", data=csv, file_name="prediction_results.csv", mime='text/csv')
 import streamlit as st
 import pandas as pd
 import pickle
@@ -108,4 +71,4 @@ else:
     st.info("⬆️ Vui lòng tải lên file CSV để bắt đầu.")
 
 st.markdown("---")
-st.caption("Designed by Senior ML Engineer & Designer with 20 years of experience.")
+st.caption("Designed by VoHoangTran.")

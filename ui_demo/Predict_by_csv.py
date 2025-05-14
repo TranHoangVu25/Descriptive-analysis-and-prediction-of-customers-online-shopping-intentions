@@ -1,26 +1,24 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 
-# Page config
+# Set page config trước
 st.set_page_config(
     page_title="Customer Purchase Prediction",
     page_icon="🔮",
-    layout="wide"
+    layout="wide",
 )
 
 # Title
 st.title("🛒 Customer Purchase Prediction")
 st.markdown("---")
 
-# file_path = 'D:\Tran Hoang Vu\Semester 6\Big Data Analytics\\assigment\model\model.pkl'
+# file_path = 'D:\\Tran Hoang Vu\\Semester 6\\Big Data Analytics\\assigment\\model\\model.pkl'
+file_path = '..\\model\\model.pkl'
 
-# import os
-# file_path = os.path.join('.', 'model', 'model.pkl')
-file_path = '.\\model\\model.pkl'
-# Load model from sidebar
-# st.sidebar.header("Configuration")
+
 # model_path = st.sidebar.text_input("Model file path", file_path)
 model_path = file_path
 @st.cache_resource
@@ -33,10 +31,30 @@ def load_model(path):
 
 model = load_model(model_path)
 if not model:
-    st.error("❌ Không tải được model.")
+    st.error("❌ Fail in loading model.")
 
 # File uploader for prediction data
 uploaded_file = st.file_uploader("📂 Upload CSV for Prediction", type="csv")
+
+def draw_pie_chart(df):
+    st.subheader("ROC & Purchase Ratio")
+    counts = df['predicted_purchase'].value_counts().rename(index={0: 'Not Purchased', 1: 'Purchased'})
+    col1, col2, = st.columns([1, 1])
+    with col2:
+        fig, ax = plt.subplots(figsize=(1.3, 1.3))
+        ax.pie(counts, 
+               labels=counts.index, 
+               autopct='%1.1f%%', 
+               startangle=90,
+                textprops={'fontsize': 8},   # giảm fontsize xuống 5
+                labeldistance=1.5,           # khoảng cách label so với tâm
+                pctdistance=0.6              # khoảng cách số phần trăm so với tâm               
+                )
+        ax.axis('equal')
+        st.pyplot(fig)
+    with col1:
+        st.image('ROC.png')
+
 
 if uploaded_file and model:
     df = pd.read_csv(uploaded_file)
@@ -52,13 +70,8 @@ if uploaded_file and model:
         st.subheader("Prediction Results")
         st.dataframe(df)
 
-        # Plot purchase ratio
-        st.subheader("Purchase Ratio")
-        counts = df['predicted_purchase'].value_counts().rename(index={0: 'Not Purchased', 1: 'Purchased'})
-        fig, ax = plt.subplots()
-        ax.pie(counts, labels=counts.index, autopct='%1.1f%%', startangle=90)
-        ax.axis('equal')
-        st.pyplot(fig)
+        draw_pie_chart(df)
+        
 
         # Download button
         csv = df.to_csv(index=False).encode('utf-8')
@@ -69,10 +82,8 @@ if uploaded_file and model:
             mime="text/csv"
         )
     except Exception as e:
-        st.error(f"❌ Lỗi khi dự đoán: {e}")
+        st.error(f"❌ Fail in prediction: {e}")
 
 else:
-    st.info("⬆️ Vui lòng tải lên file CSV để bắt đầu.")
+    st.info("⬆️ Please, upload csv.")
 
-st.markdown("---")
-st.caption("Designed by VoHoangTran.")

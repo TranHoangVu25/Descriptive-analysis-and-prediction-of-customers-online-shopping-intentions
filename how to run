@@ -1,1 +1,3 @@
-streamlit run file_name.py
+download lib: pip install -r requirements.txt
+run program: streamlit run Predict_by_csv.py
+

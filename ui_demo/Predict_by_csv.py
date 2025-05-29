@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
@@ -15,11 +14,9 @@ st.set_page_config(
 st.title("🛒 Customer Purchase Prediction")
 st.markdown("---")
 
-# file_path = 'D:\\Tran Hoang Vu\\Semester 6\\Big Data Analytics\\assigment\\model\\model.pkl'
 file_path = '..\\model\\model.pkl'
 
 
-# model_path = st.sidebar.text_input("Model file path", file_path)
 model_path = file_path
 @st.cache_resource
 def load_model(path):
@@ -46,9 +43,9 @@ def draw_pie_chart(df):
                labels=counts.index, 
                autopct='%1.1f%%', 
                startangle=90,
-                textprops={'fontsize': 8},   # giảm fontsize xuống 5
-                labeldistance=1.5,           # khoảng cách label so với tâm
-                pctdistance=0.6              # khoảng cách số phần trăm so với tâm               
+                textprops={'fontsize': 8},  
+                labeldistance=1.5,           
+                pctdistance=0.6                        
                 )
         ax.axis('equal')
         st.pyplot(fig)
